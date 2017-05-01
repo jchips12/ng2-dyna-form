@@ -1,0 +1,48 @@
+<div class="container">
+  <div>
+    <form [formGroup]="registerForm" (ngSubmit)="register()" autocomplete="off">
+      <div>
+        <md-input-container> <input mdInput placeholder="First Name" formControlName="first_name"> </md-input-container>
+        <md-input-container> <input mdInput placeholder="Last Name" formControlName="last_name"> </md-input-container>
+      </div>
+      <div>
+        <md-input-container> <input mdInput placeholder="Phone Number" formControlName="phone"> </md-input-container>
+      </div>
+      <div>
+        <md-input-container> <input mdInput placeholder="Email Address" formControlName="email"> </md-input-container>
+      </div>
+      <div>
+        <md-radio-group class="register-radio-group" formControlName="gender"> <md-radio-button class="register-radio-button" value="male">Male</md-radio-button>
+        <md-radio-button class="register-radio-button" value="female">Female</md-radio-button> </md-radio-group>
+      </div>
+      <div formArrayName="addresses">
+        <div *ngFor="let address of registerForm.controls.addresses.controls;let i=index">
+          <div formGroupName="{{i}}">
+            <md-input-container> <input mdInput placeholder="Street" formControlName="street"> </md-input-container>
+            <md-input-container> <input mdInput placeholder="ZIP" formControlName="zip"> </md-input-container>
+            <md-input-container> <input mdInput placeholder="City" formControlName="city"> </md-input-container>
+            <button type="button" md-button *ngIf="i !== 0" (click)="removeAddress(i)">Delete</button>
+          </div>
+        </div>
+        <div class="container">
+          <div fxLayoutAlign="center center">
+            <button type="button" md-raised-button (click)="addAddress()">Add</button>
+          </div>
+        </div>
+      </div>
+      <br />
+      <br />
+      <div class="container">
+        <div fxLayoutAlign="center center">
+          <button type="button" md-raised-button (click)="resetForm()">Reset</button>
+        </div>
+        <div fxLayoutAlign="center center">
+          <button md-raised-button>Submit</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+<div>
+  <md-card> <pre>{{ registerForm.value | json }}</pre> </md-card>
+</div>
